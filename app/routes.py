@@ -5,6 +5,7 @@ import stripe
 
 
 @app.route('/')
+@app.route('/index')
 def index():
     if not discord.authorized: # force oauth to access page
         return redirect(url_for('discord.login'))
@@ -19,3 +20,23 @@ def index():
         db.session.commit() # commit to the DB
 
     return render_template('index.html', key=config['STRIPE_PUBLIC'])
+
+
+@app.route('/charge')
+def charge():
+    if not discord.authorized:
+        return redirect(url_for('discord.login'))
+
+    customer = stripe.Customer.create(
+        email=request.form['stripeEmail'],
+        source=request.form['stripeToken']
+    )
+
+    charge = stripe.Subscription.create(
+        customer=customer.id,
+        items=[
+            {'plan': 'plan_D3QO1EpbGsFVMK'}
+        ]
+    )
+
+    return render_template('charge.html')
