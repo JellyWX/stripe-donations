@@ -7,7 +7,7 @@ import stripe
 
 app = Flask(__name__)
 app.config.from_object(Config)
-discord_blueprint = make_discord_blueprint(scope=['identify', 'guilds', 'email'], redirect_url='index')
+discord_blueprint = make_discord_blueprint(scope=['identify', 'email'], redirect_url='index')
 app.register_blueprint(discord_blueprint, url_prefix='/login')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

@@ -4,12 +4,15 @@ from models import SimpleUser
 import stripe
 
 
-@app.route('/')
-@app.route('/index')
-def index():
+@app.before_request
+def before_request():
     if not discord.authorized: # force oauth to access page
         return redirect(url_for('discord.login'))
 
+
+@app.route('/')
+@app.route('/index')
+def index():
     discord_user = discord.get('api/users/@me').json() # grab user
 
     if SimpleUser.query.filter_by(email=discord_user['email']) is None: # check if the user is registered already
@@ -24,9 +27,6 @@ def index():
 
 @app.route('/charge')
 def charge():
-    if not discord.authorized:
-        return redirect(url_for('discord.login'))
-
     customer = stripe.Customer.create(
         email=request.form['stripeEmail'],
         source=request.form['stripeToken']
