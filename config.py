@@ -9,6 +9,8 @@ class Config(object):
     client_id = config.get('WEB', 'DISCORD_OAUTH_CLIENT_ID')
     client_secret = config.get('WEB', 'DISCORD_OAUTH_CLIENT_SECRET')
     secret = config.get('WEB', 'SECRET')
+    stripe_secret = config.get('WEB', 'STRIPE_SECRET')
+    stripe_public = config.get('WEB', 'STRIPE_SECRET')
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or secret
 
@@ -17,3 +19,6 @@ class Config(object):
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    STRIPE_SECRET = stripe_secret
+    STRIPE_PUBLIC = stripe_public

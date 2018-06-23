@@ -1,16 +1,11 @@
 from flask import redirect, url_for, render_template, request, session
 from app import app, discord, db
 from models import SimpleUser
-
+import stripe
 
 
 @app.route('/')
 def index():
-    pass
-
-
-@app.route('/charge')
-def charge():
     if not discord.authorized: # force oauth to access page
         return redirect(url_for('discord.login'))
 
@@ -22,3 +17,5 @@ def charge():
 
         db.session.add(user)
         db.session.commit() # commit to the DB
+
+    return render_template('index.html', key=config['STRIPE_PUBLIC'])
