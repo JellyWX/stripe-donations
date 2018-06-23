@@ -27,8 +27,10 @@ def index():
 
 @app.route('/charge')
 def charge():
+    user = discord.get('api/users/@me').json()
+
     customer = stripe.Customer.create(
-        email=request.form['stripeEmail'],
+        email=user['email'],
         source=request.form['stripeToken']
     )
 
