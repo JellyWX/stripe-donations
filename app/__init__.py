@@ -11,6 +11,6 @@ discord_blueprint = make_discord_blueprint(scope=['identify', 'email'], redirect
 app.register_blueprint(discord_blueprint, url_prefix='/login')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-stripe.api_key = config['STRIPE_SECRET']
+stripe.api_key = app.config['STRIPE_SECRET']
 
 from app import routes, models
