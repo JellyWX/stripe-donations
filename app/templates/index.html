@@ -5,7 +5,7 @@
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="{{ key }}"
             data-description="Subscribe to {{ plan['nickname'] }}"
-            data-amount="500"
+            data-amount="{{ plan['amount'] }}"
             data-locale="auto"
             data-currency="gbp"
             data-label="{{ plan['nickname'] }}"
