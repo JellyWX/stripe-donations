@@ -10,7 +10,6 @@ def index():
     if not discord.authorized: # force oauth to access page
         return redirect(url_for('discord.login'))
 
-
     discord_user = discord.get('api/users/@me').json() # grab user
 
     if SimpleUser.query.filter_by(email=discord_user['email']).first() is None: # check if the user is registered already
@@ -38,7 +37,7 @@ def charge():
     charge = stripe.Subscription.create(
         customer=customer.id,
         items=[
-            {'plan': 'plan_D5INAPYHTis1bc'}
+            {'plan': 'plan_DEy934m4XuIy7z'}
         ]
     )
 
