@@ -19,15 +19,17 @@ def index():
         db.session.add(user) # add to DB
         db.session.commit() # commit to the DB
 
-    return render_template('index.html', key=app.config['STRIPE_PUBLIC'])
+    return render_template('index.html', key=app.config['STRIPE_PUBLIC'], plans=[{'nickname' : 'basic plan', 'id' : 'plan_DEy934m4XuIy7z'}, {'nickname' : 'extra plan', 'id' : 'plan_DEg934m4XuIy7z'}], email=discord_user['email'])
 
 
-@app.route('/charge', methods=['POST'])
-def charge():
+@app.route('/charge/<string:id>', methods=['POST'])
+def charge(id):
     if not discord.authorized: # force oauth to access page
         return redirect(url_for('discord.login'))
 
     user = discord.get('api/users/@me').json()
+
+    print(request.form)
 
     customer = stripe.Customer.create(
         email=user['email'],
@@ -37,7 +39,7 @@ def charge():
     charge = stripe.Subscription.create(
         customer=customer.id,
         items=[
-            {'plan': 'plan_DEy934m4XuIy7z'}
+            {'plan': id}
         ]
     )
 

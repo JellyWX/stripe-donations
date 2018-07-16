@@ -14,3 +14,5 @@ migrate = Migrate(app, db)
 stripe.api_key = app.config['STRIPE_SECRET']
 
 from app import routes, models
+
+db.create_all()

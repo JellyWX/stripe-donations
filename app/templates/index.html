@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="/charge" method="post">
-  <article>
-    <label>
-      <span>Amount is £5.00</span>
-    </label>
-  </article>
-
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="{{ key }}"
-          data-description="Test charge"
-          data-amount="500"
-          data-locale="auto">
-  </script>
-</form>
+  {% for plan in plans %}
+  <form action="/charge/{{ plan['id'] }}" method="post">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ key }}"
+            data-description="Subscribe to {{ plan['nickname'] }}"
+            data-amount="500"
+            data-locale="auto"
+            data-currency="gbp"
+            data-label="{{ plan['nickname'] }}"
+            data-email="{{ email }}">
+    </script>
+  </form>
+  {% endfor %}
 {% endblock %}
