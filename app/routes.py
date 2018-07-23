@@ -19,7 +19,7 @@ def index():
         db.session.add(user) # add to DB
         db.session.commit() # commit to the DB
 
-    return render_template('index.html', key=app.config['STRIPE_PUBLIC'], plans=[{'nickname' : 'basic plan', 'id' : 'plan_DEy934m4XuIy7z', 'amount' : 200}, {'nickname' : 'extra plan', 'id' : 'plan_DEg934m4XuIy7z', 'amount' : 500}], email=discord_user['email'])
+    return render_template('index.html', key=app.config['STRIPE_PUBLIC'], plans=app.config['PLANS'], email=discord_user['email'])
 
 
 @app.route('/charge/<string:id>', methods=['POST'])

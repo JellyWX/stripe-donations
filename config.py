@@ -11,6 +11,7 @@ class Config(object):
     secret = config.get('WEB', 'SECRET')
     stripe_secret = config.get('WEB', 'STRIPE_SECRET')
     stripe_public = config.get('WEB', 'STRIPE_PUBLIC')
+    plans = config.get('WEB', 'PLANS')
 
     SECRET_KEY = os.environ.get('SECRET_KEY') or secret
 
@@ -22,3 +23,5 @@ class Config(object):
 
     STRIPE_SECRET = stripe_secret
     STRIPE_PUBLIC = stripe_public
+
+    PLANS = eval(plans)
